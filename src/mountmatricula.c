@@ -12,15 +12,24 @@ mount_mountable_done_cb (GObject *object,
 {
   GFile *target;
   GError *error = NULL;
+  GtkWidget *dialog;
 
   target = g_file_mount_mountable_finish (G_FILE (object), res, &error);
 
   g_print ("Destino, %s", target);
-  
-  if (target == NULL)
-    g_printerr ("Error mounting location: %s\n", error->message);
-  else
+
+  if (target == NULL) {
+    dialog = gtk_message_dialog_new (NULL,
+				     GTK_DIALOG_DESTROY_WITH_PARENT,
+				     GTK_MESSAGE_ERROR,
+				     GTK_BUTTONS_CLOSE,
+				     "Error mounting location: %s\n",
+				     error->message);
+    gtk_dialog_run (GTK_DIALOG(dialog));
+    gtk_main_quit();
+  } else
     g_object_unref (target);
+
   /*
   outstanding_mounts--;
 
@@ -34,8 +43,8 @@ void mount (char *username, char *password) {
   gchar *cmd;
   GMountOperation *op;
 
-  cmd = g_strdup_printf("ssh://%s@%s:/home/%s",
-		       username, SERVIDOR, username);
+  cmd = g_strdup_printf ("ssh://%s@%s:/home/%s",
+			 username, SERVIDOR, username);
 
   g_print ("mountando: %s\n", cmd);
 
@@ -93,15 +102,19 @@ int main (int argc, char *argv[]) {
 
   dialog = GTK_WIDGET(gtk_builder_get_object (builder, "dialog"));
   gint result = gtk_dialog_run (GTK_DIALOG(dialog));
+  obj = gtk_builder_get_object (builder, "username");
+  username = g_strdup(gtk_entry_get_text (GTK_ENTRY(obj)));
 
-  if (result) {
-    obj = gtk_builder_get_object (builder, "username");
-    username = gtk_entry_get_text (GTK_ENTRY(obj));
+  obj = gtk_builder_get_object (builder, "password");
+  password = g_strdup(gtk_entry_get_text (GTK_ENTRY(obj)));
 
-    obj = gtk_builder_get_object (builder, "password");
-    password = gtk_entry_get_text (GTK_ENTRY(obj));
-    mount (username, password);
-    
-  }
+  
+  gtk_widget_destroy (dialog);
+
+  if (!result)
+    return 1;
+
+  mount (username, password);
+
   gtk_main();
 }
