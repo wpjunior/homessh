@@ -4,10 +4,10 @@
   <object class="GtkDialog" id="dialog">
     <property name="can_focus">False</property>
     <property name="border_width">5</property>
-    <property name="type_hint">dialog</property>
     <property name="title">Acesso a Pasta Pessoal</property>
+    <property name="type_hint">dialog</property>
     <child internal-child="vbox">
-      <object class="GtkHBox" id="dialog-vbox1">
+      <object class="GtkBox" id="dialog-vbox1">
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
         <property name="spacing">2</property>
@@ -31,9 +31,10 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="button1">
+              <object class="GtkButton" id="btn_connect">
                 <property name="label">gtk-connect</property>
                 <property name="visible">True</property>
+                <property name="sensitive">False</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="use_action_appearance">False</property>
@@ -57,7 +58,6 @@
           <object class="GtkVBox" id="box1">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="orientation">vertical</property>
             <property name="spacing">8</property>
             <child>
               <object class="GtkLabel" id="label3">
@@ -94,20 +94,16 @@
                   <object class="GtkTable" id="grid1">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="row_spacing">8</property>
-                    <property name="column_spacing">6</property>
                     <property name="n_rows">2</property>
                     <property name="n_columns">2</property>
+                    <property name="column_spacing">6</property>
+                    <property name="row_spacing">8</property>
                     <child>
                       <object class="GtkLabel" id="label1">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Matricula:</property>
                       </object>
-                      <packing>
-                        <property name="left_attach">0</property>
-                        <property name="top_attach">0</property>
-                      </packing>
                     </child>
                     <child>
                       <object class="GtkLabel" id="label2">
@@ -116,7 +112,6 @@
                         <property name="label" translatable="yes">Senha:</property>
                       </object>
                       <packing>
-                        <property name="left_attach">0</property>
                         <property name="top_attach">1</property>
                       </packing>
                     </child>
@@ -126,10 +121,10 @@
                         <property name="can_focus">True</property>
                         <property name="invisible_char">●</property>
                         <property name="invisible_char_set">True</property>
+                        <signal name="changed" handler="values_changed_cb" swapped="no"/>
                       </object>
                       <packing>
                         <property name="left_attach">1</property>
-                        <property name="top_attach">0</property>
                       </packing>
                     </child>
                     <child>
@@ -139,6 +134,7 @@
                         <property name="visibility">False</property>
                         <property name="invisible_char">●</property>
                         <property name="invisible_char_set">True</property>
+                        <signal name="changed" handler="values_changed_cb" swapped="no"/>
                       </object>
                       <packing>
                         <property name="left_attach">1</property>
@@ -172,7 +168,7 @@
     </child>
     <action-widgets>
       <action-widget response="0">button2</action-widget>
-      <action-widget response="1">button1</action-widget>
+      <action-widget response="1">btn_connect</action-widget>
     </action-widgets>
   </object>
 </interface>
