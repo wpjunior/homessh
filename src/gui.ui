@@ -31,9 +31,10 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="button1">
+              <object class="GtkButton" id="btn_connect">
                 <property name="label">gtk-connect</property>
                 <property name="visible">True</property>
+                <property name="sensitive">False</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="use_action_appearance">False</property>
@@ -167,7 +168,7 @@
     </child>
     <action-widgets>
       <action-widget response="0">button2</action-widget>
-      <action-widget response="1">button1</action-widget>
+      <action-widget response="1">btn_connect</action-widget>
     </action-widgets>
   </object>
 </interface>
